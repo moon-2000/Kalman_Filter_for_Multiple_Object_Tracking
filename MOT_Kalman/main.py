@@ -1,15 +1,14 @@
 
 import numpy as np
-import Kalman2D
-import cv2
 import matplotlib.pyplot as plt
-import Detect
-
+import cv2
+from detect import Detect
+from kalman import Kalman2D
 
 def main():
     # dt, a_x, a_y, sd_acceleration, x_sd, y_sd
     KF = Kalman2D(0.1, 1, 1, 1, 0.1,0.1)
-    Video = cv2.VideoCapture('42.mp4')
+    Video = cv2.VideoCapture('../Data/pedestrians.mp4')
     detection = Detect()
 
     E=[]
