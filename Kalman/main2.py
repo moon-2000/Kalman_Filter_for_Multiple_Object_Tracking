@@ -2,8 +2,6 @@
 import copy
 import matplotlib.pyplot as plt
 import cv2
-from detect import Detect
-from kalman import Kalman2D
 from tracker import ObjectTracker
 from Test import *
 
@@ -13,9 +11,9 @@ def main():
 
     tracker = ObjectTracker(160, 8, 3,1)
 
-    labels = open('coco.yaml',  encoding='utf-8').read().strip().split('\n')
+    labels = open('../yolov5/data/coco.yaml',  encoding='utf-8').read().strip().split('\n')
     # Give the weight files to the model and load the network
-    modelWeights = "YOLOv5s.onnx"
+    modelWeights = "../yolov5/models/YOLOv5s.onnx"
     net = cv2.dnn.readNetFromONNX(modelWeights)
     
     layer_names = net.getLayerNames()
