@@ -34,12 +34,17 @@ class ObjectTracker(object):
                 self.object_id += 1
         
         N , M = len(self.objects), len(detections)
-        
+        print(f"N and M is {N} and {M}")
         cost_matrix = np.zeros(shape=(N, M))
         for i in range(N):
             for j in range(M):
                 diff = self.objects[i].prediction - detections[j]
-                cost_matrix[i][j] = np.sqrt(diff[0][0]*diff[0][0] +diff[1][0]*diff[1][0])
+                # print(f" diff dimensions are  {diff.shape}")
+                scaling_factor = 1e-5  # Adjust the scaling factor as needed
+                normalized_diff = diff / scaling_factor
+                cost_matrix[i][j] = np.sqrt(np.sum(normalized_diff ** 2))
+                # cost_matrix[i][j] = np.sqrt(diff[0]*diff[0] + diff[1]*diff[1])
+                # cost_matrix[i][j] = np.sqrt(diff[0][0]*diff[0][0] +diff[1][0]*diff[1][0])
 
         cost_matrix = (0.5) * cost_matrix 
         assign = []
@@ -89,5 +94,6 @@ class ObjectTracker(object):
 
             self.objects[i].line.append(self.objects[i].prediction)
             self.objects[i].KF.lastResult = self.objects[i].prediction
+
 
 
